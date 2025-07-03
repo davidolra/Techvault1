@@ -65,6 +65,7 @@ public class BodegaServiceTest {
         assertEquals("Bodega Sur", resultado.getNombre());
     }
 
+
     @Test
     public void testDeleteById() {
         Long id = 4L;
