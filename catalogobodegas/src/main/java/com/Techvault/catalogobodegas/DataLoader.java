@@ -1,4 +1,4 @@
-package com.Techvault.catalogobodegas.util;
+package com.Techvault.catalogobodegas;
 
 import com.Techvault.catalogobodegas.model.Bodega;
 import com.Techvault.catalogobodegas.service.BodegaService;
