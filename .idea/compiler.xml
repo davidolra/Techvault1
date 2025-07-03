@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Annotation profile for servicioHistorialTrans" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="servicioHistorialTrans" />
+        <module name="servicioAutenticacion" />
+        <module name="servicioPago" />
+        <module name="catalogobodegas" />
+        <module name="servicioInventario" />
+        <module name="servicioContratacion" />
+        <module name="servicioTransporte" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="catalogobodegas" options="-parameters" />
+      <module name="servicioAutenticacion" options="-parameters" />
+      <module name="servicioContratacion" options="-parameters" />
+      <module name="servicioHistorialTrans" options="-parameters" />
+      <module name="servicioInventario" options="-parameters" />
+      <module name="servicioPago" options="-parameters" />
+      <module name="servicioTransporte" options="-parameters" />
+    </option>
+  </component>
+</project>
