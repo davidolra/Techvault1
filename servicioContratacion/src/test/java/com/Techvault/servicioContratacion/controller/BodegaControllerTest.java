@@ -1,7 +1,7 @@
 package com.Techvault.servicioContratacion.controller;
 
-import com.Techvault.servicioContratacion.model.Cliente;
-import com.Techvault.servicioContratacion.service.ClienteService;
+import com.Techvault.servicioContratacion.model.Bodega;
+import com.Techvault.servicioContratacion.service.BodegaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,107 +18,107 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ClienteController.class)
+@WebMvcTest(BodegaController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class ClienteControllerTest {
+public class BodegaControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ClienteService clienteService;
+    private BodegaService bodegaService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private Cliente cliente;
+    private Bodega bodega;
 
     @BeforeEach
     void setUp() {
-        cliente = new Cliente();
-        cliente.setId(1L);
-        cliente.setNombre("Juan Perez");
-        cliente.setRut("12345678-9");
-        cliente.setEmail("juan@example.com");
+        bodega = new Bodega();
+        bodega.setId(1L);
+        bodega.setUbicacion("Calle Falsa 123");
+        bodega.setTamaño(50.0);
+        bodega.setPrecio(150000.0);
     }
 
     @Test
     void testGetAll() throws Exception {
-        when(clienteService.findAll()).thenReturn(List.of(cliente));
+        when(bodegaService.findAll()).thenReturn(List.of(bodega));
 
-        mockMvc.perform(get("/api/clientes"))
+        mockMvc.perform(get("/api/bodegas"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].nombre").value("Juan Perez"));
+                .andExpect(jsonPath("$[0].ubicacion").value("Calle Falsa 123"));
     }
 
     @Test
     void testGetById_Found() throws Exception {
-        when(clienteService.findById(1L)).thenReturn(cliente);
+        when(bodegaService.findById(1L)).thenReturn(bodega);
 
-        mockMvc.perform(get("/api/clientes/1"))
+        mockMvc.perform(get("/api/bodegas/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
     }
 
     @Test
     void testGetById_NotFound() throws Exception {
-        when(clienteService.findById(99L)).thenReturn(null);
+        when(bodegaService.findById(99L)).thenReturn(null);
 
-        mockMvc.perform(get("/api/clientes/99"))
+        mockMvc.perform(get("/api/bodegas/99"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void testCreate() throws Exception {
-        when(clienteService.save(any(Cliente.class))).thenReturn(cliente);
+        when(bodegaService.save(any(Bodega.class))).thenReturn(bodega);
 
-        mockMvc.perform(post("/api/clientes")
+        mockMvc.perform(post("/api/bodegas")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(cliente)))
+                        .content(objectMapper.writeValueAsString(bodega)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
     }
 
     @Test
     void testUpdate_Found() throws Exception {
-        when(clienteService.findById(1L)).thenReturn(cliente);
-        when(clienteService.save(any(Cliente.class))).thenReturn(cliente);
+        when(bodegaService.findById(1L)).thenReturn(bodega);
+        when(bodegaService.save(any(Bodega.class))).thenReturn(bodega);
 
-        Cliente updated = new Cliente();
-        updated.setNombre("Pedro Gomez");
-        updated.setRut("98765432-1");
-        updated.setEmail("pedro@example.com");
+        Bodega updated = new Bodega();
+        updated.setUbicacion("Nueva Direccion");
+        updated.setTamaño(60.0);
+        updated.setPrecio(180000.0);
 
-        mockMvc.perform(put("/api/clientes/1")
+        mockMvc.perform(put("/api/bodegas/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updated)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Pedro Gomez"));
+                .andExpect(jsonPath("$.ubicacion").value("Nueva Direccion"));
     }
 
     @Test
     void testUpdate_NotFound() throws Exception {
-        when(clienteService.findById(99L)).thenReturn(null);
+        when(bodegaService.findById(99L)).thenReturn(null);
 
-        mockMvc.perform(put("/api/clientes/99")
+        mockMvc.perform(put("/api/bodegas/99")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(cliente)))
+                        .content(objectMapper.writeValueAsString(bodega)))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void testDelete_Found() throws Exception {
-        when(clienteService.findById(1L)).thenReturn(cliente);
-        doNothing().when(clienteService).deleteById(1L);
+        when(bodegaService.findById(1L)).thenReturn(bodega);
+        doNothing().when(bodegaService).deleteById(1L);
 
-        mockMvc.perform(delete("/api/clientes/1"))
+        mockMvc.perform(delete("/api/bodegas/1"))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void testDelete_NotFound() throws Exception {
-        when(clienteService.findById(99L)).thenReturn(null);
+        when(bodegaService.findById(99L)).thenReturn(null);
 
-        mockMvc.perform(delete("/api/clientes/99"))
+        mockMvc.perform(delete("/api/bodegas/99"))
                 .andExpect(status().isNotFound());
     }
 }
